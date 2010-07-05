@@ -8,11 +8,7 @@
 function spice(innerfn){return function(){try{return innerfn.apply(null,arguments);}catch(e){GM_log("Exception caught: "+e.name+" - "+e.message+"\n"+e.filename+":"+e.lineNumber+"\n"+e.stack);var lines=e.stack.split('\n');var l1=lines[lines.length-3],l2=lines[lines.length-2];var n1=parseInt(l1.substr(l1.length-3,3)),n2=parseInt(l2.substr(l2.length-3,3));GM_log(n1-n2+8);}}}
 (spice(function(){
 	
-	
 	var customquery = "-in:chats -l:calendar -l:college -l:fastweb -l:edline";		//Enter your custom search parameters here
-	
-	
-	
 	
 	
 	
@@ -30,9 +26,7 @@ function spice(innerfn){return function(){try{return innerfn.apply(null,argument
 		//GM_log('page is loaded');
 		addGlobalStyle('.flooglehorn{font-size: 80%;  border-bottom-width: 1px;  border-bottom-style: solid;  border-bottom-color: rgb(204, 204, 204);  cursor: pointer;  background-color: rgb(232, 238, 247);} .whiteline{background-color: white;}');
 		if (unsafeWindow.gmonkey) {
-			//GM_log('got the gmonkey');
 			unsafeWindow.gmonkey.load("1.0", spice(function(api){
-				//GM_log('load is done');
 				var afterdate = new Date();
 				afterdate.setFullYear(afterdate.getFullYear() - 1);
 				var beforedate = new Date();
@@ -50,13 +44,7 @@ function spice(innerfn){return function(){try{return innerfn.apply(null,argument
 							var indexA = req.responseText.indexOf('D(["tb"') + 2;
 							var msgdata = req.responseText.substring(indexA, req.responseText.indexOf(');', indexA));
 							msgdata = msgdata.replace(/_A\([^)]*\)/g, '"_A(...)"');
-							//GM_log(msgdata);
 							var struct = eval(msgdata);
-/*
-							GM_log("Adding nav module...");
-							var mod = api.addNavModule('On this day');
-							GM_log("Added nav module");
-*/
 							var canvasDoc = window.top.document.getElementById("canvas_frame").contentWindow.document;
 							var container = canvasDoc.evaluate('/html/body/div/div[last()]/div/div[2]/div/div[2]/div', canvasDoc, null,  XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
 							var box = canvasDoc.createElement('div');
@@ -88,7 +76,7 @@ function spice(innerfn){return function(){try{return innerfn.apply(null,argument
 								div.setAttribute('title', leetspan.innerHTML);
 								div.setAttribute('messageid', id);
 								div.addEventListener('click', spice(function(event){
-									//note: the value of this is getting eaten by spice, so use event.target instead
+									//note: the value of 'this' is getting eaten by spice, so use event.target instead
 									top.location.href = top.location.href.split('#')[0] + '#search/' + query + '/' + event.target.getAttribute('messageid');
 								}), true);
 								mod.appendChild(div);
@@ -98,7 +86,6 @@ function spice(innerfn){return function(){try{return innerfn.apply(null,argument
 						}
 					}
 				});
-				//GM_log('sending request');
 				req.send(null);
 			}));
 		}
