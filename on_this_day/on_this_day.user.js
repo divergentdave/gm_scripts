@@ -5,7 +5,7 @@
 // @include        http://mail.google.com/*
 // @include        https://mail.google.com/*
 // ==/UserScript==
-function spice(innerfn){return function(){try{return innerfn.apply(null,arguments);}catch(e){GM_log("Exception caught: "+e.name+" - "+e.message+"\n"+e.filename+":"+e.lineNumber+"\n"+e.stack);var lines=e.stack.split('\n');var l1=lines[lines.length-3],l2=lines[lines.length-2];var n1=parseInt(l1.substr(l1.length-3,3)),n2=parseInt(l2.substr(l2.length-3,3));GM_log(n1-n2+8);}}}
+function spice(innerfn){return function(){try{return innerfn.apply(this,arguments);}catch(e){GM_log("Exception caught: "+e.name+" - "+e.message+"\n"+e.filename+":"+e.lineNumber+"\n"+e.stack);var lines=e.stack.split('\n');var l1=lines[lines.length-3],l2=lines[lines.length-2];var n1=parseInt(l1.substr(l1.length-3,3)),n2=parseInt(l2.substr(l2.length-3,3));GM_log(n1-n2+8);}}}
 (spice(function(){
 	
 	var customquery = "-in:chats -l:calendar -l:college -l:fastweb -l:edline";		//Enter your custom search parameters here
@@ -78,8 +78,7 @@ function spice(innerfn){return function(){try{return innerfn.apply(null,argument
 								div.setAttribute('title', leetspan.innerHTML);
 								div.setAttribute('messageid', id);
 								div.addEventListener('click', spice(function(event){
-									//note: the value of 'this' is getting eaten by spice, so use event.target instead
-									top.location.href = top.location.href.split('#')[0] + '#search/' + query + '/' + event.target.getAttribute('messageid');
+									top.location.href = top.location.href.split('#')[0] + '#search/' + query + '/' + this.getAttribute('messageid');
 								}), true);
 								mod.appendChild(div);
 							}
