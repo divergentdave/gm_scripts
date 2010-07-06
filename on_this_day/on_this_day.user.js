@@ -24,7 +24,7 @@ function spice(innerfn){return function(){try{return innerfn.apply(null,argument
 	}
 	window.addEventListener('load', spice(function(){
 		//GM_log('page is loaded');
-		addGlobalStyle('.flooglehorn{font-size: 80%;  border-bottom-width: 1px;  border-bottom-style: solid;  border-bottom-color: rgb(204, 204, 204);  cursor: pointer;  background-color: rgb(232, 238, 247);} .whiteline{background-color: white;}');
+		addGlobalStyle('.otditem{font-size: 80%; cursor: pointer; background-color: white;} .otdgrayline{border-bottom: 1px solid #CCCCCC;} .otdroundedbox{-moz-border-radius: 4px 4px 0px 0px; border: 2px solid #E0ECFF; background-color: #E0ECFF} .otdtitle{font-size: 80%; background-color: #E0ECFF; padding-bottom: 2px;}');
 		if (unsafeWindow.gmonkey) {
 			unsafeWindow.gmonkey.load("1.0", spice(function(api){
 				var afterdate = new Date();
@@ -48,9 +48,13 @@ function spice(innerfn){return function(){try{return innerfn.apply(null,argument
 							var canvasDoc = window.top.document.getElementById("canvas_frame").contentWindow.document;
 							var container = canvasDoc.evaluate('/html/body/div/div[last()]/div/div[2]/div/div[2]/div', canvasDoc, null,  XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
 							var box = canvasDoc.createElement('div');
-							box.setAttribute('class', 'nH pp ps');
+							box.setAttribute('class', 'nH pp ps otdroundedbox');
+							var titlediv = canvasDoc.createElement('div');
+							titlediv.setAttribute('class', 'otdtitle');
+							titlediv.appendChild(canvasDoc.createTextNode("On this day"));
 							var box2 = canvasDoc.createElement('div');
 							box2.setAttribute('class', 'nH');
+							box.appendChild(titlediv);
 							box.appendChild(box2);
 							container.appendChild(box);
 							var mod = box2;//good enough for a workaround
@@ -60,17 +64,15 @@ function spice(innerfn){return function(){try{return innerfn.apply(null,argument
 								var msg = struct[i];
 								var id = msg[0];
 								var body = msg[10];
-								var isread = msg[3];
 								var from = msg[7];
 								from = from.substring(from.indexOf('>') + 1, from.indexOf('</span>'));
 								var subj = msg[9];
 								var tick = msg[8];//tick will include html in it, might want to skip it, though
 								var div = document.createElement('div');
-								if (isread == '1')
-									div.setAttribute('class', 'flooglehorn');
+								if (i == struct.length - 1)
+									div.setAttribute('class', 'otditem');
 								else
-									div.setAttribute('class', 'flooglehorn whiteline');
-								//div.innerHTML = from + tick + subj + ' - ' + body;
+									div.setAttribute('class', 'otditem otdgrayline');
 								div.innerHTML = '<b>' + from + '</b>' + tick + subj;
 								leetspan.innerHTML = body;
 								div.setAttribute('title', leetspan.innerHTML);
