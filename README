@@ -1,4 +1,7 @@
 This repository holds various Greasemonkey user scripts I have written for myself at one point or another
 
 On this day: This script integrates with Gmail, and lists the emails you received exactly one year ago in a little widget.
+	Install from http://github.com/divergentdave/gm_scripts/raw/master/on_this_day/on_this_day.user.js
+
 Youtube previewer: For every Youtube link on a page, this script puts the title of the video in the link's hover text.
+	Install from http://github.com/divergentdave/gm_scripts/raw/master/youtube_preview/youtube_preview.user.js
