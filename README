@@ -5,3 +5,9 @@ On this day: This script integrates with Gmail, and lists the emails you receive
 
 Youtube previewer: For every Youtube link on a page, this script puts the title of the video in the link's hover text.
 	Install from http://github.com/divergentdave/gm_scripts/raw/master/youtube_preview/youtube_preview.user.js
+
+Campus alert: Warns you when you visit a University of Minnesota website that is from any campus other than Twin Cities.
+	Install from http://github.com/divergentdave/gm_scripts/raw/master/campus_alert/campus_alert.user.js
+
+Read-only Facebook: As much a statement about the state of social networking as it is a userscript. This script hides all text boxes from view, encouraging to define yourself in other ways. The script really only uses CSS, so I recommend adding the rules to userContent.css instead. See the comments in the source code for instructions.
+	Install from http://github.com/divergentdave/gm_scripts/raw/master/read-only_facebook/read-only_facebok.user.js, or alternatively follow the directions enclosed to put the rules in your userContent.css file.
