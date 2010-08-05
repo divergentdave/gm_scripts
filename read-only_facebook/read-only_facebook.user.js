@@ -5,4 +5,11 @@
 // @include        http://*.facebook.com/*
 // ==/UserScript==
 
-GM_addStyle("textarea, .inputtext, .inputpassword, .UIComposer_Box, .UIComposer, .uiTypeahead, .uiUfiAddComment{display: none !important;}");
+/* NOTE: To avoid seeing text boxes blink away shortly after the page loads,
+ * copy the CSS from inside the quotes, surround it with 
+ * @-moz-document domain(facebook.com) { ... } and paste it all into 
+ * C:\Users\<username>\AppData\Roaming\Mozilla\Firefox\Profiles\<...>
+ * \chrome\userContent.css (or equivalent) and restart your browser.
+ */
+
+GM_addStyle("textarea, .inputtext, .inputpassword, .UIComposer_Box, .UIComposer, .uiTypeahead, .uiUfiAddComment, .datebox, .like_link, .comment_link, .GBSearchBox { display: none !important; }");
