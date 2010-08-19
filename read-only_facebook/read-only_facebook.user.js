@@ -12,5 +12,5 @@
  * \chrome\userContent.css (or equivalent) and restart your browser.
  */
 
-GM_addStyle("textarea, .inputtext, .inputpassword, .UIComposer_Box, .UIComposer, .uiTypeahead, .uiUfiAddComment, .datebox, .UIActionLinks, .GBSearchBox { display: none !important; }\n" +
-".gigaboxx_composer>.MessageComposer, .gigaboxx_composer>.MessageComposer textarea, .gigaboxx_composer>.MessageComposer .inputtext { display: block !important; }");
+GM_addStyle("textarea, .inputtext, .UIComposer_Box, .UIComposer, .uiTypeahead, .uiUfiAddComment, .datebox, .UIActionLinks, .GBSearchBox { display: none !important; }\n" +
+".gigaboxx_composer>.MessageComposer, .gigaboxx_composer>.MessageComposer textarea, .gigaboxx_composer>.MessageComposer .inputtext, #email { display: block !important; }");
