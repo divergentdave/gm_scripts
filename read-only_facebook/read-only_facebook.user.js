@@ -13,4 +13,4 @@
  */
 
 GM_addStyle("textarea, .inputtext, .UIComposer_Box, .UIComposer, .uiTypeahead, .uiUfiAddComment, .datebox, .UIActionLinks, .GBSearchBox, .commentActions { display: none !important; }\n" +
-".gigaboxx_composer>.MessageComposer, .gigaboxx_composer>.MessageComposer textarea, .gigaboxx_composer>.MessageComposer .inputtext, #email, .UIComposer.MessageComposer { display: block !important; }");
+".gigaboxx_composer>.MessageComposer, .gigaboxx_composer>.MessageComposer textarea, .gigaboxx_composer>.MessageComposer .inputtext, #email, #pass, .UIComposer.MessageComposer { display: block !important; }");
