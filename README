@@ -9,6 +9,8 @@ Youtube previewer: For every Youtube link on a page, this script puts the title 
 Campus alert: Warns you when you visit a University of Minnesota website that is from any campus other than Twin Cities.
 	Install from http://github.com/divergentdave/gm_scripts/raw/master/campus_alert/campus_alert.user.js
 
-Read-only Facebook: As much a statement about the state of social networking as it is a userscript. This script hides all text boxes from view, such as the status publisher, comment boxes, and the event creator.
-The script really only uses CSS, so I recommend adding the rules to userContent.css instead. See the comments in the source code for instructions.
+Read-only Facebook: This script hides almost all text boxes on Facebook, such as the status publisher, comment boxes, and the sidebar event creator. It only uses CSS, so you could alternatively add the rules to userContent.css for better performance. See the comments in the source code for instructions.
 	Install from http://github.com/divergentdave/gm_scripts/raw/master/read-only_facebook/read-only_facebook.user.js, or alternatively follow the directions enclosed to put the rules in your userContent.css file.
+
+Laundry View Classic: This script automatically redirects to the flash-free "classic mode" version of LaundryView pages.
+	Install from http://github.com/divergentdave/gm_scripts/raw/master/lv_classic/lv_classic.user.js
