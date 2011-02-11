@@ -5,28 +5,38 @@
 // @include        http://mail.google.com/*
 // @include        https://mail.google.com/*
 // ==/UserScript==
-function spice(innerfn){return function(){try{return innerfn.apply(this,arguments);}catch(e){GM_log("Exception caught: "+e.name+" - "+e.message+"\n"+e.filename+":"+e.lineNumber+"\n"+e.stack);var lines=e.stack.split('\n');var l1=lines[lines.length-3],l2=lines[lines.length-2];var n1=parseInt(l1.substr(l1.length-3,3)),n2=parseInt(l2.substr(l2.length-3,3));GM_log(n1-n2+8);}}}
+
+/*You can enter your custom search parameters here*/ var customquery = "-in:chats -l:calendar -l:college -l:fastweb -l:edline";
+
+function spice(innerfn) {
+	return function() {
+		try {
+			return innerfn.apply(this, arguments);
+		} catch(e) {
+			GM_log("Exception caught: " + e.name + " - " + e.message);
+			var lines = e.stack.split('\n');
+			var l1 = lines[0];
+			var l2 = lines[1];
+			var n1 = parseInt(l1.substring(l1.lastIndexOf(":") + 1, l1.length));
+			var n2 = parseInt(l2.substring(l2.lastIndexOf(":") + 1, l2.length));
+			GM_log(n1 - n2 + 14); // This magic number is to correct line numbers received from FF/GM, and it is sensitive to how many lines this function takes up, among other things. Not guaranteed to work with recursive code, etc. etc.
+		}
+	}
+}
+
 (spice(function(){
-	
-	var customquery = "-in:chats -l:calendar -l:college -l:fastweb -l:edline";		//Enter your custom search parameters here
-	
-	
-	
-	
-	function addGlobalStyle(css) {
+	function addGlobalStyle(css, doc) {
 		var head, style;
-		head = document.getElementsByTagName('head')[0];
+		head = doc.getElementsByTagName('head')[0];
 		if (!head) { return; }
-		style = document.createElement('style');
+		style = doc.createElement('style');
 		style.type = 'text/css';
 		style.innerHTML = css;
 		head.appendChild(style);
 	}
 	window.addEventListener('load', spice(function(){
-		//GM_log('page is loaded');
-		addGlobalStyle('.otditem{font-size: 80%; cursor: pointer; background-color: white;} .otdgrayline{border-bottom: 1px solid #CCCCCC;} .otdroundedbox{-moz-border-radius: 4px 4px 0px 0px; border: 2px solid #E0ECFF; background-color: #E0ECFF} .otdtitle{font-size: 80%; background-color: #E0ECFF; padding-bottom: 2px;}');
-		if (unsafeWindow.gmonkey) {
-			unsafeWindow.gmonkey.load("1.0", spice(function(api){
+		if (window.wrappedJSObject.gmonkey) {
+			window.wrappedJSObject.gmonkey.load("1.0", spice(function(api){
 				var afterdate = new Date();
 				afterdate.setFullYear(afterdate.getFullYear() - 1);
 				var beforedate = new Date();
@@ -34,19 +44,29 @@ function spice(innerfn){return function(){try{return innerfn.apply(this,argument
 				beforedate.setDate(beforedate.getDate() + 1);
 				var query = customquery + ' after:' + afterdate.getFullYear() + '/' + (afterdate.getMonth() + 1) + '/' + afterdate.getDate() + ' before:' + beforedate.getFullYear() + '/' + (beforedate.getMonth() + 1) + '/' + beforedate.getDate();
 				query = query.replace(/:/g, '%3A').replace(/ /g, '+').replace(/\//g, '%2F');
-				var url = location.protocol + '//' + location.hostname + location.pathname + '?ui=2&ik=' + unsafeWindow.top.js.GLOBALS[9] + '&view=tl&start=0&num=25&rt=h&q=' + query + '&search=query';
+				var js = null;
+				for (var i = 0; i < window.top.frames.length; i++) {
+					var frame = window.top.frames[i];
+					if (frame.name[0] == 'j') {
+						js = frame;
+					}
+				}
+				var url = location.protocol + '//' + location.hostname + location.pathname + '?ui=2&ik=' + js.wrappedJSObject.GLOBALS[9] + '&view=tl&start=0&num=25&rt=h&q=' + query + '&search=query';
 				var req = new XMLHttpRequest();
 				req.open('GET', url, true);
 				req.onreadystatechange = spice(function() {
 					if (req.readyState == 4) {
 						if (req.status == 200) {
-							//GM_log('req.responseText');
 							var indexA = req.responseText.indexOf('D(["tb"') + 2;
 							var msgdata = req.responseText.substring(indexA, req.responseText.indexOf(');', indexA));
 							msgdata = msgdata.replace(/_A\([^)]*\)/g, '"_A(...)"');
-							var struct = eval(msgdata);
+							var struct = eval(msgdata);//TODO: This is unsafe, but window.JSON is strict window.wrappedJSObject.JSON.parse(msgdata);
 							var canvasDoc = window.top.document.getElementById("canvas_frame").contentWindow.document;
-							var container = canvasDoc.evaluate('/html/body/div/div[last()]/div/div[2]/div/div[2]/div', canvasDoc, null,  XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+							addGlobalStyle('.otditem{font-size: 80%; cursor: pointer; background-color: white;} .otdgrayline{border-bottom: 1px solid #CCCCCC;} .otdroundedbox{-moz-border-radius: 4px 4px 0px 0px; border: 2px solid #E0ECFF; background-color: #E0ECFF} .otdtitle{font-size: 80%; background-color: #E0ECFF; padding-bottom: 2px;}', canvasDoc);
+							var container = canvasDoc.evaluate('/html/body/div/div[last()]/div/table/tr/td[1]/div[last()]/div', canvasDoc, null,  XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+							if (container == null) {
+								container = canvasDoc.evaluate('/html/body/div[1]/div/div/div[last()]/div[1]/div[2]', canvasDoc, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+							}
 							var box = canvasDoc.createElement('div');
 							box.setAttribute('class', 'nH pp ps otdroundedbox');
 							var titlediv = canvasDoc.createElement('div');
