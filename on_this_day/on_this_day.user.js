@@ -57,15 +57,26 @@ function spice(innerfn) {
 				req.onreadystatechange = spice(function() {
 					if (req.readyState == 4) {
 						if (req.status == 200) {
-							var indexA = req.responseText.indexOf('D(["tb"') + 2;
-							var msgdata = req.responseText.substring(indexA, req.responseText.indexOf(');', indexA));
-							msgdata = msgdata.replace(/_A\([^)]*\)/g, '"_A(...)"');
-							var struct = eval(msgdata);//TODO: This is unsafe, but window.JSON is strict window.wrappedJSObject.JSON.parse(msgdata);
+							var index = req.responseText.indexOf('D(["tb"');
+							var struct;
+							if (index > -1)
+							{
+								var msgdata = req.responseText.substring(index + 2, req.responseText.indexOf(');', index + 2));
+								msgdata = msgdata.replace(/_A\([^)]*\)/g, '"_A(...)"');
+								struct = eval(msgdata);//TODO: This is unsafe, but window.JSON is strict
+							}
+							else
+							{
+								struct = [[],[],[]];
+							}
 							var canvasDoc = window.top.document.getElementById("canvas_frame").contentWindow.document;
 							addGlobalStyle('.otditem{font-size: 80%; cursor: pointer; background-color: white;} .otdgrayline{border-bottom: 1px solid #CCCCCC;} .otdroundedbox{-moz-border-radius: 4px 4px 0px 0px; border: 2px solid #E0ECFF; background-color: #E0ECFF} .otdtitle{font-size: 80%; background-color: #E0ECFF; padding-bottom: 2px;}', canvasDoc);
 							var container = canvasDoc.evaluate('/html/body/div/div[last()]/div/table/tr/td[1]/div[last()]/div', canvasDoc, null,  XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
 							if (container == null) {
 								container = canvasDoc.evaluate('/html/body/div[1]/div/div/div[last()]/div[1]/div[2]', canvasDoc, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+							}
+							if (container == null) {
+								GM_log('still null??');
 							}
 							var box = canvasDoc.createElement('div');
 							box.setAttribute('class', 'nH pp ps otdroundedbox');
