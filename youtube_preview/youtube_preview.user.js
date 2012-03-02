@@ -44,13 +44,17 @@ function processTree(base) {
 
 processTree(document);
 
-document.addEventListener('DOMNodeInserted', function(event) {
-  processTree(event.target);
+document.body.addEventListener('DOMNodeInserted', function(event) {
+  setTimeout(function() {
+    processTree(event.target);
+  }, 0);
 }, false);
 
-document.addEventListener('DOMAttrModified', function(event) {
+document.body.addEventListener('DOMAttrModified', function(event) {
   if (event.attrName == 'href') {
-    processTree(event.target);
+    setTimeout(function() {
+      processTree(event.target);
+    }, 0);
   }
 }, false);
 
