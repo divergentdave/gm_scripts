@@ -6,7 +6,7 @@
 // @include        https://mail.google.com/*
 // ==/UserScript==
 
-/*You can enter your custom search parameters here*/ var customquery = "-in:chats -l:calendar -l:college -l:fastweb -l:edline";
+/*You can enter your custom search parameters here*/ var customquery = "-in:chats -l:calendar -l:college -l:fastweb -l:edline -l:ccefp";
 
 function spice(innerfn) {
 	return function() {
