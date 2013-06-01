@@ -3,6 +3,7 @@
 // @namespace      http://divergentdave.googlepages.com/
 // @description    Fetch the description for Youtube links, and put it in the hover text
 // @include        *
+// @grant          GM_xmlhttpRequest
 // ==/UserScript==
 (function () {
 var regex = /watch\?(?:.*=.*&)*v=([-_a-zA-Z0-9]*)/;
@@ -42,20 +43,45 @@ function processTree(base) {
   }
 }
 
-processTree(document);
-
-document.body.addEventListener('DOMNodeInserted', function(event) {
-  setTimeout(function() {
-    processTree(event.target);
-  }, 0);
-}, false);
-
-document.body.addEventListener('DOMAttrModified', function(event) {
-  if (event.attrName == 'href') {
-    setTimeout(function() {
-      processTree(event.target);
-    }, 0);
+function mutationCallback(mutation) {
+  if (mutation.type == 'attributes') {
+    var href = mutation.target.getAttribute('href');
+    if (href != null) {
+      if (href.startsWith('http://www.youtube.com/watch?') ||
+          href.startsWith('https://www.youtube.com/watch?')) {
+        process(mutation.target);
+      }
+    }
+  } else if (mutation.type == 'childList' && mutation.addedNodes != null) {
+    for (var i = 0; i < mutation.addedNodes.length; i++) {
+      var node = mutation.addedNodes[i];
+      if (node.nodeType == Node.ELEMENT_NODE) {
+        var href = node.getAttribute('href');
+        if (href != null) {
+          if (href.startsWith('http://www.youtube.com/watch?') ||
+              href.startsWith('https://www.youtube.com/watch?')) {
+            process(node);
+          }
+        }
+      }
+    }
   }
-}, false);
+}
+
+function hookMutation() {
+  var observer = new MutationObserver(function(mutations) {
+    mutations.forEach(mutationCallback);
+  });
+  var config = {
+    attributes: true,
+    childList: true,
+    subtree: true,
+    attributeFilter: ['href']
+  };
+  observer.observe(document.body, config);
+}
+
+hookMutation();
+processTree(document);
 
 })();
