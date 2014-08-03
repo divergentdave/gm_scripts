@@ -3,6 +3,9 @@
 // @description An automated tool to format pull photos for blog posts and news posts at edinarobotics.com. To use, navigate to a photo in a gallery, open the Greasemonkey menu, and select "Create pull photo."
 // @namespace   dnc.1816.pullimage
 // @include     http://edinarobotics.com/media/photos/*
+// @include     http://www.edinarobotics.com/media/photos/*
+// @include     http://edinarobotics.com/photos/*
+// @include     http://www.edinarobotics.com/photos/*
 // @version     1
 // @grant       GM_registerMenuCommand
 // @grant       GM_setClipboard
@@ -10,34 +13,52 @@
 
 GM_registerMenuCommand("Create pull photo", function(){
   try {
-    var centerCol = document.getElementById("centerCol");
+    if (location.pathname.startsWith("/media/photos/")) {
+      var centerCol = document.getElementById("centerCol");
 
-    var images = centerCol.getElementsByTagName("img");
-    if (images.length == 0) {
-      alert("Error: Didn't find image");
-      return;
-    } else if (images.length > 1) {
-      alert("Error: Too many images");
-      return;
+      var images = centerCol.getElementsByTagName("img");
+      if (images.length == 0) {
+        alert("Error: Didn't find image");
+        return;
+      } else if (images.length > 1) {
+        alert("Error: Too many images");
+        return;
+      }
+      var image = images[0];
+
+      var src = image.getAttribute("src");
+      var reducedWidth = 260;
+      var reducedHeight = "auto";
+
+      var h1s = centerCol.getElementsByTagName("h1");
+      if (h1s.length == 0) {
+        alert("Error: Didn't find title");
+        return;
+      } else if (h1s.length > 1) {
+        alert("Error: Too many titles");
+        return;
+      }
+      var caption = h1s[0].firstChild.nodeValue.replace(/^\s+|\s+$/g, '');
+    } else if (location.pathname.startsWith("/photos/")) {
+      var images = document.getElementsByTagName("img");
+      if (images.length == 0) {
+        alert("Error: Didn't find image");
+        return;
+      } else if (images.length > 1) {
+        alert("Error: Too many images");
+        return;
+      }
+      var image = images[0];
+
+      var src = image.getAttribute("src");
+      var reducedWidth = 260;
+      var reducedHeight = "auto";
+      var caption = "";
     }
-    var image = images[0];
-
-    var src = image.getAttribute("src");
-    var originalWidth = parseInt(image.getAttribute("width"), 10);
-    var originalHeight = parseInt(image.getAttribute("height"), 10);
-    var reducedWidth = 260;
-    var reducedHeight = Math.floor(originalHeight * reducedWidth / originalWidth);
-
-    var h1s = centerCol.getElementsByTagName("h1");
-    if (h1s.length == 0) {
-      alert("Error: Didn't find title");
-      return;
-    } else if (h1s.length > 1) {
-      alert("Error: Too many titles");
-      return;
+    result = prompt("Edit caption", caption);
+    if (result) {
+      caption = result;
     }
-    var caption = h1s[0].firstChild.nodeValue.replace(/^\s+|\s+$/g, '');
-    caption = prompt("Edit caption", caption);
 
     var body = document.createElement("body");
     var pullPhoto = document.createElement("div");
@@ -55,8 +76,6 @@ GM_registerMenuCommand("Create pull photo", function(){
     popupPhoto.setAttribute("class", "popupPhoto");
     var img2 = document.createElement("img");
     img2.setAttribute("src", src);
-    img2.setAttribute("width", originalWidth);
-    img2.setAttribute("height", originalHeight);
     img2.setAttribute("alt", caption);
     popupPhoto.appendChild(img2);
     var p2 = document.createElement("p");
