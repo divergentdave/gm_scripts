@@ -1,13 +1,16 @@
 # Greasemonkey Scripts
 
-This repository holds various Greasemonkey user scripts I have written for myself at one point or another
+This repository holds various Greasemonkey user scripts I have written for myself at one point or another.
 
 ### ChangeDetection Snapshot Extractor
 Adds links to changedetection.com pages to grab one snapshot out of their cache. This works by comparing one version to itself.
+
 [Install](https://github.com/divergentdave/gm_scripts/raw/master/ChangeDetection_snapshot_extractor/ChangeDetection_snapshot_extractor.user.js)
 
 ### Pull Photo
 This is a utility script to help me put photos on the [Edina Robotics website](http://www.edinarobotics.com/). It's too specialized to layout and styling to be useful to anyone else, but it may be educational.
+
+[Install](https://github.com/divergentdave/gm_scripts/raw/master/Pull_Photo/Pull_Photo.user.js)
 
 ### Campus Alert
 Warns you when you visit a University of Minnesota website that is from any campus other than Twin Cities.
