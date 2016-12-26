@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
     for (var i = 0; i < links.length; i++) {
       var link = links[i];
       var result = link.href.match(re);
-      if (result != null) {
+      if (result !== null) {
         var cursor = link.nextSibling;
         var newHref = "javascript:loadCompareCache('" + result[1] + "', '" + result[2] + "', '" + result[2] + "'" + result[3] + ");";
         var newLink = document.createElement('a');

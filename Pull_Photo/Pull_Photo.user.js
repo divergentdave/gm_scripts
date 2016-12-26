@@ -13,47 +13,48 @@
 
 GM_registerMenuCommand("Create pull photo", function(){
   try {
+    var images, image, src, caption, reducedWidth, reducedHeight;
     if (location.pathname.startsWith("/media/photos/")) {
       var centerCol = document.getElementById("centerCol");
 
-      var images = centerCol.getElementsByTagName("img");
-      if (images.length == 0) {
+      images = centerCol.getElementsByTagName("img");
+      if (images.length === 0) {
         alert("Error: Didn't find image");
         return;
       } else if (images.length > 1) {
         alert("Error: Too many images");
         return;
       }
-      var image = images[0];
+      image = images[0];
 
-      var src = image.getAttribute("src");
-      var reducedWidth = 260;
-      var reducedHeight = "auto";
+      src = image.getAttribute("src");
+      reducedWidth = 260;
+      reducedHeight = "auto";
 
       var h1s = centerCol.getElementsByTagName("h1");
-      if (h1s.length == 0) {
+      if (h1s.length === 0) {
         alert("Error: Didn't find title");
         return;
       } else if (h1s.length > 1) {
         alert("Error: Too many titles");
         return;
       }
-      var caption = h1s[0].firstChild.nodeValue.replace(/^\s+|\s+$/g, '');
+      caption = h1s[0].firstChild.nodeValue.replace(/^\s+|\s+$/g, '');
     } else if (location.pathname.startsWith("/photos/")) {
-      var images = document.getElementsByTagName("img");
-      if (images.length == 0) {
+      images = document.getElementsByTagName("img");
+      if (images.length === 0) {
         alert("Error: Didn't find image");
         return;
       } else if (images.length > 1) {
         alert("Error: Too many images");
         return;
       }
-      var image = images[0];
+      image = images[0];
 
-      var src = image.getAttribute("src");
-      var reducedWidth = 260;
-      var reducedHeight = "auto";
-      var caption = "";
+      src = image.getAttribute("src");
+      reducedWidth = 260;
+      reducedHeight = "auto";
+      caption = "";
     }
     result = prompt("Edit caption", caption);
     if (result) {
