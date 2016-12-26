@@ -13,16 +13,16 @@ This is a utility script to help me put photos on the [Edina Robotics website](h
 [Install](https://github.com/divergentdave/gm_scripts/raw/master/Pull_Photo/Pull_Photo.user.js)
 
 ### Campus Alert
-Warns you when you visit a University of Minnesota website that is from any campus other than Twin Cities.
+Warns you when you visit a University of Minnesota website that is from any campus other than Twin Cities. (Caution: unmaintained)
 
 [Install](https://github.com/divergentdave/gm_scripts/raw/master/campus_alert/campus_alert.user.js)
 
 ### Laundry View Classic
-This script automatically redirects to the flash-free "classic mode" version of LaundryView pages.
+This script automatically redirects to the flash-free "classic mode" version of LaundryView pages. (Caution: unmaintained)
 
 [Install](https://github.com/divergentdave/gm_scripts/raw/master/lv_classic/lv_classic.user.js)
 
 ### On This Day
-This script integrates with Gmail, and lists the emails you received exactly one year ago in a little widget.
+This script integrates with Gmail, and lists the emails you received exactly one year ago in a little widget. (Caution: probably broken and unmaintained)
 
 [Install](https://github.com/divergentdave/gm_scripts/raw/master/on_this_day/on_this_day.user.js)
