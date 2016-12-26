@@ -26,8 +26,3 @@ Warns you when you visit a University of Minnesota website that is from any camp
 This script automatically redirects to the flash-free "classic mode" version of LaundryView pages. (Caution: unmaintained)
 
 [Install](https://github.com/divergentdave/gm_scripts/raw/master/lv_classic/lv_classic.user.js)
-
-### On This Day
-This script integrates with Gmail, and lists the emails you received exactly one year ago in a little widget. (Caution: probably broken and unmaintained)
-
-[Install](https://github.com/divergentdave/gm_scripts/raw/master/on_this_day/on_this_day.user.js)
