@@ -7,6 +7,11 @@ Adds links to changedetection.com pages to grab one snapshot out of their cache.
 
 [Install](https://github.com/divergentdave/gm_scripts/raw/master/ChangeDetection_snapshot_extractor/ChangeDetection_snapshot_extractor.user.js)
 
+### Deplorable Blocker
+Automatically blocks Twitter accounts by user name. Whenever an account with "Deplorable" or the frog emoji in their name shows up in a stream, this script will prompt you to automatically block them.
+
+[Install](https://github.com/divergentdave/gm_scripts/raw/master/Deplorable_Blocker/Deplorable_Blocker.user.js)
+
 ### Pull Photo
 This is a utility script to help me put photos on the [Edina Robotics website](http://www.edinarobotics.com/). It's too specialized to layout and styling to be useful to anyone else, but it may be educational.
 
