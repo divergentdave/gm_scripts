@@ -17,8 +17,8 @@ var waitingForModal = false;
 
 function scan() {
   if (!waitingForModal) {
-    var tweet = document.querySelector('li.stream-item div.tweet[data-name~="Deplorable"],' +
-                                       'li.stream-item div.tweet[data-name~="🐸"]');
+    var tweet = document.querySelector('li.stream-item div.tweet[data-name*="Deplorable"],' +
+                                       'li.stream-item div.tweet[data-name*="🐸"]');
     if (tweet) {
       var name = tweet.dataset.name;
       if (!nameCache[name]) {
